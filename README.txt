@@ -33,3 +33,18 @@ and it successfully saved the page into the gnu_front_page.txt file.
 to process that file line by line.  Towards the bottom there is a table that lists 
 all the links to each month's worth of discussion topics.  I need to run the file through 
 a regex search and build another file with a URL on each line.
+
+7. I can manually scan the front_page and keep the output to five lines with this:
+	grep --max-count=5 '<li>' front_page.html
+	
+8. Now I need to find a regex example to do this in my c++ code.
+
+9. Since my laptop doesn't have c++11 with native regex support I need to use the
+Boost.org regex library which requires that I build it since it's not just a header
+only supported function.  
+
+10. To get started I need to refresh my memory on using the header only libs.  See
+boost_lambda.cpp to see this.
+
+11. Now I need to build against a library.  I haven't done this, so it will be a
+learning curve. 
