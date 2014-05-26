@@ -47,4 +47,28 @@ only supported function.
 boost_lambda.cpp to see this.
 
 11. Now I need to build against a library.  I haven't done this, so it will be a
-learning curve. 
+learning curve. Boost comes with a bootstrap program that guides the build process
+for their many libs.  invoke it first with help then with --show-libraries.  I had
+to run it with sudo.  
+	cd /usr/local/boost_1_55_0
+	./bootstrap.sh --help | more
+	sudo ./bootstrap.sh --show-libraries | more
+since I only want to regex library for now I invoked the bootstrap like this:
+	sudo ./bootstrap.sh --with-libraries=regex
+this command exited with a successful build and created a configuration script that
+is invoked by running 
+	./b2
+however, it also has a help option so I want to look at that first by calling
+	./b2 --help
+after reading a little about how ./b2 works I called it like this
+	sudo ./b2
+the build script exits with the following message:
+	The Boost C++ Libraries were successfully built!
+	The following directory should be added to compiler include paths:
+	    /usr/local/boost_1_55_0
+	The following directory should be added to linker library paths:
+	    /usr/local/boost_1_55_0/stage/lib
+
+
+hahaha...now my battery died and I had to take a break!
+	
