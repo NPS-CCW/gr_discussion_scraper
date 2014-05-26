@@ -41,7 +41,9 @@ a regex search and build another file with a URL on each line.
 
 9. Since my laptop doesn't have c++11 with native regex support I need to use the
 Boost.org regex library which requires that I build it since it's not just a header
-only supported function.  
+only supported function.  The link below is a great reference..well written, good
+grammer and spot on step-by-step instructions
+	http://www.boost.org/doc/libs/1_55_0/more/getting_started/unix-variants.html
 
 10. To get started I need to refresh my memory on using the header only libs.  See
 boost_lambda.cpp to see this.
@@ -68,7 +70,13 @@ the build script exits with the following message:
 	    /usr/local/boost_1_55_0
 	The following directory should be added to linker library paths:
 	    /usr/local/boost_1_55_0/stage/lib
+	FINALLY, I was able to compile the test program boost_regex.cpp with this line:
+		c++ -I/usr/local/boost_1_55_0 /usr/local/boost_1_55_0/stage/lib/libboost_regex.a boost_regex.cpp  -o a_example
+		
+12. After this lengthy process to get REGEX running in my version of C++ I was
+able to successfully run the test program by feeding a sample text email into it
+and the regex found the subject line and returned it to std out.  Note the calling
+syntax for the command line..kind of cool
+	./a_example < test_mail.txt
 
-
-hahaha...now my battery died and I had to take a break!
 	
