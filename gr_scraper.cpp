@@ -45,42 +45,57 @@ inline void error(const string& s, int i){
 	error(os.str());
 }
 
-void get_front_page(string& s) {
-	string url = "http://lists.gnu.org/archive/html/discuss-gnuradio/";
+void write_to_file(const string& file_name, const string& data ) {
+	ofstream ofs(file_name.c_str());
+	if(!ofs) error("can't open output stream");
+	ofs<<data;
+	cout<<"Wrote "<<file_name<<endl;
+}
+
+void curl_get(const string url, const string file) {
   	curl::global g;
-//  	string s;
+  	string s;
   	curl::callback::string cb(s);
   	curl::handle h(g, cb);
 	curl::tag a;
   	try {
 	  	a = h.get(url);
-	// 	cb.clear();
+		write_to_file(file, s);
+		cb.clear();
   	} catch (const underflow_error &e) {
 		cout<<e.what()<<endl;
 		cout << "Saved page retrieval.\n";
   	}
 }
 
-void write_front_page(const string& s) {
-	string front_page = "front_page.html";
-	ofstream ofs(front_page.c_str());
-	if(!ofs) error("can't open output stream");
-	ofs<<s;
+void process_front_page(const string in_file, const string out_file){
+	//read the file in one line at a time and write it to the output file
+	//open the input file
+	ifstream ifs(in_file.c_str());
+	if(!ifs) error("can't open the input file to process the front page");
+	//open the output file
+	ofstream ofs(out_file.c_str());
+	if(!ofs) error("can't open the output file to process the front page");
+	
+	//read each line and write it to output...later we will only write it
+	//if there is a regex match in the line
+	string line;
+	while(ifs) {
+		getline(ifs, line);
+		ofs<<line<<endl;
+	}
 }
 
 int main(int argc, char **argv) {
-	try {
-		
-		string s;		//filled by curl
-		
-		get_front_page(s);
-	
-		string front_page = "front_page.html";
-		ofstream ofs(front_page.c_str());
-		if(!ofs) error("can't open output stream");
-		ofs << s;
-		cout<<"Wrote the string to the file\n";
-//		cb.clear();
+	try {	
+		// curl the front page and store results in a file
+		curl_get("http://lists.gnu.org/archive/html/discuss-gnuradio/",
+				 "front_page.html"
+				);
+				
+		// iterate over the front page saving every list item in the page 
+		// to another file
+		process_front_page("front_page.html", "list_items.html");
 	}
 	catch(runtime_error& e){
 		cerr<<"runtime_error: "<<e.what()<<endl;
