@@ -265,6 +265,7 @@ int main(int argc, char **argv) {
 		if (system(NULL)) puts("Opening cdma_final.html");
 		else error("system is unabailable to open cdma_final.html");
 		i=system("open cdma_final.html");
+		cout<<"Cleaning up\n";
 		i=system("./clean.sh");
 }
 
