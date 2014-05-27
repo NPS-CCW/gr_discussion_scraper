@@ -28,25 +28,31 @@
 */
 #include "ccurl/curl.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-  assert(argc > 1);
+	string url = "http://lists.gnu.org/archive/html/discuss-gnuradio/";
   curl::global g;
   string s;
   curl::callback::string cb(s);
   curl::handle h(g, cb);
-  curl::tag a, b;
-  a = h.get(argv[1]);
-  cout << s << '\n' << "mod: " << a << '\n';
-  cb.clear();
   try {
-    a = h.get(argv[1], &a);
+		curl::tag a;
+	  a = h.get(url);
     cout << s << '\n' << "mod: " << a << '\n';
+	  cb.clear();
   } catch (const underflow_error &e) {
     cout << "Saved page retrieval.\n";
   }
+	
+	string front_page = "front_page.html";
+	ofstream ofs(front_page.c_str());
+	if(!ofs) error("can't open output stream");
+	
+	
+
   return 0;
 }
