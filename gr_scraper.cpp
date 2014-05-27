@@ -28,6 +28,7 @@
 */
 #include "gr_scraper.h"
 #include "ccurl/curl.h"
+#include <boost/regex.hpp>
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
@@ -82,6 +83,8 @@ void process_front_page(const string in_file, const string out_file){
 	string line;
 	while(ifs) {
 		getline(ifs, line);
+		
+		
 		ofs<<line<<endl;
 	}
 }

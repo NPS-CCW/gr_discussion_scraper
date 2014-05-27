@@ -72,6 +72,8 @@ the build script exits with the following message:
 	    /usr/local/boost_1_55_0/stage/lib
 	FINALLY, I was able to compile the test program boost_regex.cpp with this line:
 		c++ -I/usr/local/boost_1_55_0 /usr/local/boost_1_55_0/stage/lib/libboost_regex.a boost_regex.cpp  -o a_example
+	on my desktop this is the compiler command
+		g++ -I/opt/local/include /opt/local/lib/libboost_regex-mt.a boost_regex.cpp -o a_example
 		
 12. After this lengthy process to get REGEX running in my version of C++ I was
 able to successfully run the test program by feeding a sample text email into it
@@ -83,6 +85,10 @@ syntax for the command line..kind of cool
 work on my main.cpp.  Successfully building with this directive
 	g++ -lcurl ccurl/curl.cpp gr_scraper.cpp
 	
-14. 
-
+14. I've got the basic file handling for curling the front page, saving it to file and 
+then stepping through all the lines of the front page working.  Now I need to implement
+the regex to keep only the lines from the list items that contain links to the monthly
+feeds.  The build command for the whole thing will now inlcude the boost regex stuff.
+	g++ -I/opt/local/include -lcurl /opt/local/lib/libboost_regex-mt.a ccurl/curl.cpp gr_scraper.cpp -o a_scraper
+This worked.  So I can build it now I need to implement the regex.
 	
