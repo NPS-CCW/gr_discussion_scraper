@@ -1,32 +1,31 @@
 /*
 	GNU_RADIO WEB SCRAPER
-		-scrapes the GNU-Radio discussion pages for work on CDMA
-		 implementation.
+	-scrapes the GNU-Radio discussion pages for work on CDMA
+	 implementation.
 
-	initiated: 26 May 2014.  Memorial day!  Thinking of both my
-						grandfathers today who gave their youth to our 
-						country, and the long line of wonderful grandchildren
-						they never had the opportunity to meet.
+	initiated: 26 May 2014. Memorial day!  Thinking of both my
+				grandfathers today who gave their youth to our 
+				country, and the long line of wonderful grandchildren
+				they never had the opportunity to meet.
 						
 	author:   Z. H. Staples, zacstaples (at) mac (dot) com
 
 	license:  This software is free and released into the public
-						domain.  If you use it then need to buy me a beer..
-						or wine...or dinner..or at least tell me an interesting
-						story...or something!  You just don't owe me any
-						money.
+		  domain.  If you use it then need to buy me a beer..
+		  or wine...or dinner..or at least tell me an interesting
+		  story...or something!  You just don't owe me any
+		  money.
 	
 	dependencies: 1. uses a fork of the ccurl project on github.com to
-								wrap the curl utility.
-								2. uses boost.regex because I'm building it on a 
-								system without c++11 native regex support.
-								NOTE: both of these dependencies have long open
-								source kind of licenses that don't include my 
-								requirement for a beer, but I'm guessing you won't
-								read their gnu/mit/bsf/yada/yada/yada licenses 
-								either.
+			 wrap the curl utility.
+		      2. uses boost.regex because I'm building it on a 
+			 system without c++11 native regex support.
+		      NOTE: both of these dependencies have long open
+		      source kind of licenses that don't include my 
+		      requirement for a beer, but I'm guessing you won't
+		      read their gnu/mit/bsf/yada/yada/yada licenses 
+		      either.
 */
-#include "gr_scraper.h"
 #include "ccurl/curl.h"
 #include <boost/regex.hpp>
 #include <stdexcept>
@@ -58,7 +57,6 @@ void write_to_file(const string& file_name, const string& data ) {
 }
 
 void curl_get(const string url, const string file) {
-//  	curl::global g;
   	string s;
   	curl::callback::string cb(s);
   	curl::handle h(g, cb);
@@ -109,8 +107,7 @@ void add_footers(ofstream& ofs)
 	
 }
 
-void process_front_page(const string in_file, const string out_file,
-						const string base_url)
+void process_front_page(const string in_file, const string out_file, const string base_url)
 {
 	//read the file in one line at a time and write it to the output file
 	//open the input file
@@ -206,17 +203,14 @@ void process_cdma_links(const string in_file, const string out_file)
 		}
 	}
 	add_footers(ofs);
-	
 }
 
 void curl_get_then_append(const string url, const string tmp_file,
 						  const string cdma_file) 
 {
-//  	curl::global g;
   	static string s;
   	static curl::callback::string cb(s);
   	static curl::handle h(g, cb);
-//	curl::tag a;
   	try {
 	  	h.get(url);
 		write_to_file(tmp_file, s);
@@ -265,6 +259,8 @@ int main(int argc, char **argv) {
 		// reformat the cdma.html page with correct fully defined links in href line
 		process_cdma_links("cdma.html", "cdma_final.html");
 		
+		//finally open the web page we build and remove all the temp files with
+		//shell script
 		int i;
 		if (system(NULL)) puts("Opening cdma_final.html");
 		else error("system is unabailable to open cdma_final.html");
