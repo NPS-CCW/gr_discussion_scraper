@@ -82,10 +82,15 @@ void process_front_page(const string in_file, const string out_file){
 	//if there is a regex match in the line
 	string line;
 	while(ifs) {
-		getline(ifs, line);
-		
-		
-		ofs<<line<<endl;
+		getline(ifs, line);	
+		string p = "^<li>.+=(.+)>.+</li>$";
+		boost::regex pat(p);
+		boost::smatch matches;
+		if(boost::regex_match(line, matches, pat)) {
+			if(matches.size() == 2){		//we have a match for the capture
+				ofs<<matches[1]<<endl;	//add the capture to the links file
+			}
+		}
 	}
 }
 

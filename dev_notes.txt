@@ -91,4 +91,8 @@ the regex to keep only the lines from the list items that contain links to the m
 feeds.  The build command for the whole thing will now inlcude the boost regex stuff.
 	g++ -I/opt/local/include -lcurl /opt/local/lib/libboost_regex-mt.a ccurl/curl.cpp gr_scraper.cpp -o a_scraper
 This worked.  So I can build it now I need to implement the regex.
+
+15. The world wide web is AWESOME.  This site is perfect for helping build
+regular expressions
+	http://regexpal.com/
 	
