@@ -102,8 +102,9 @@ links.  First I need to figure out the base URL which is:
 	http://lists.gnu.org/archive/html/discuss-gnuradio/
 and append the series of distinctive links....done!
 
-17. Next up is the looped curl. Got it..now I need to finish up by curling the 
-actual message.  The base URL is still 
-	http://lists.gnu.org/archive/html/discuss-gnuradio/
-with the year month in the format 2014-05/ followed by 
-	msg{$NAME}.html
+17. Next up is the looped curl. Got it..now I need to scan all those incoming files
+to look for 'cdma | CDMA' and then format links to the actual messages.
+
+18. Got it.  Final product pushed to Frank and release signed out on github.
+
+19.  14 straight hours!!!  Done!!!
