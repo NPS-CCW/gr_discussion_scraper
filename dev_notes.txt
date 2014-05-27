@@ -96,3 +96,14 @@ This worked.  So I can build it now I need to implement the regex.
 regular expressions
 	http://regexpal.com/
 	
+16. Okay..now I've gotten the first regex working.  And I'm capturing a list of all
+the links to the monthly discussion summaries.  Now I need to build a process to curl those
+links.  First I need to figure out the base URL which is:
+	http://lists.gnu.org/archive/html/discuss-gnuradio/
+and append the series of distinctive links....done!
+
+17. Next up is the looped curl. Got it..now I need to finish up by curling the 
+actual message.  The base URL is still 
+	http://lists.gnu.org/archive/html/discuss-gnuradio/
+with the year month in the format 2014-05/ followed by 
+	msg{$NAME}.html
