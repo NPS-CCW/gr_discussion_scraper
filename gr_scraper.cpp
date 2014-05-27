@@ -26,33 +26,69 @@
 								read their gnu/mit/bsf/yada/yada/yada licenses 
 								either.
 */
+#include "gr_scraper.h"
 #include "ccurl/curl.h"
+#include <stdexcept>
 #include <iostream>
 #include <fstream>
 
 using namespace std;
 
-int main(int argc, char **argv)
-{
+// error() disguises throws:
+inline void error(const string& s){ throw runtime_error(s);}
+
+inline void error(const string& s, const string& s2) { error(s+s2); }
+
+inline void error(const string& s, int i){
+	ostringstream os;
+	os << s <<": " << i;
+	error(os.str());
+}
+
+void get_front_page(string& s) {
 	string url = "http://lists.gnu.org/archive/html/discuss-gnuradio/";
-  curl::global g;
-  string s;
-  curl::callback::string cb(s);
-  curl::handle h(g, cb);
-  try {
-		curl::tag a;
-	  a = h.get(url);
-    cout << s << '\n' << "mod: " << a << '\n';
-	  cb.clear();
-  } catch (const underflow_error &e) {
-    cout << "Saved page retrieval.\n";
-  }
-	
+  	curl::global g;
+//  	string s;
+  	curl::callback::string cb(s);
+  	curl::handle h(g, cb);
+	curl::tag a;
+  	try {
+	  	a = h.get(url);
+	// 	cb.clear();
+  	} catch (const underflow_error &e) {
+		cout<<e.what()<<endl;
+		cout << "Saved page retrieval.\n";
+  	}
+}
+
+void write_front_page(const string& s) {
 	string front_page = "front_page.html";
 	ofstream ofs(front_page.c_str());
 	if(!ofs) error("can't open output stream");
-	
-	
+	ofs<<s;
+}
 
-  return 0;
+int main(int argc, char **argv) {
+	try {
+		
+		string s;		//filled by curl
+		
+		get_front_page(s);
+	
+		string front_page = "front_page.html";
+		ofstream ofs(front_page.c_str());
+		if(!ofs) error("can't open output stream");
+		ofs << s;
+		cout<<"Wrote the string to the file\n";
+//		cb.clear();
+	}
+	catch(runtime_error& e){
+		cerr<<"runtime_error: "<<e.what()<<endl;
+		return 5;
+	}
+	catch(...){
+		cerr<<"don't know what broke it."<<endl;
+		return 4;
+	}
+  	return 0;
 }

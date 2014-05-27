@@ -81,7 +81,7 @@ syntax for the command line..kind of cool
 
 13. Now that I have the foundation in place after nine hours..hahaha..I'm starting to 
 work on my main.cpp.  Successfully building with this directive
-	c++ -lcurl ccurl/curl.cpp gr_scraper.cpp
+	g++ -lcurl ccurl/curl.cpp gr_scraper.cpp
 	
 14. 
 
